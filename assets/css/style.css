@@ -1,3 +1,8 @@
+/*font-family: 'Pacifico', cursive;*/
+/*font-family: 'Oswald', sans-serif;*/
+body {
+    font-family: 'Oswald', sans-serif;
+}
 
 .content-height {
     height: 90%;
@@ -8,18 +13,31 @@
     height: 962px;
 }
 
-#navbarToggleExternalContent {
-    /* width: 2px; */
+h1 {
+    font-family: "Pacifico", cursive;
+    font-size: 62px;
+    color: white;
+    padding: 20px;
 }
-/*#title {*/
-    /*text-align: center;*/
-/*}*/
+
+h2 {
+    width: 548px;
+    color:  white;
+    margin:  auto;
+}
+
+header {
+    background: #1b4056;
+    border-bottom: solid 4px white;
+}
+
 body {
     overflow-x: hidden;
+    background: #377ca5;
 }
 
 label {
-    margin: 0 0 0 32px;
+    margin: 0 0 0 41px;
     color: #999999;
 }
 
@@ -27,8 +45,19 @@ label {
 
 #search-bar {
     width: 210px;
-    margin-bottom: 21px;
+    /* margin-bottom: 21px; */
+    /* margin-left: -7px; */
     height: 30px;
+    margin: 15px 0 15px -5px;
+    /* text-align:  center; */
+}
+
+#add-button {
+    border-bottom: solid 2px white;
+    border-top: solid 2px white;
+    background: black;
+    text-align:  center;
+    margin-left: -43px;
 }
 
 #wrapper {
@@ -36,6 +65,7 @@ label {
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
+    height: 100%;
     transition: all 0.5s ease;
 }
 
@@ -47,11 +77,13 @@ label {
     z-index: 1000;
     position: fixed;
     left: 250px;
-    width: 0;
+    /* padding-right: 10px; */
+    /* width: 10px; */
+    border-right: solid 5px #377ca5;
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #000;
+    background: #592223;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -71,6 +103,10 @@ label {
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
     margin-right: -250px;
+}
+
+#instruction-row {
+    display: none;
 }
 
 
@@ -93,7 +129,8 @@ label {
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: white;
+    font-size: 30px;
 }
 
 .sidebar-nav li a:hover {
@@ -121,7 +158,28 @@ label {
     background: none;
 }
 
-@media(min-width:768px) {
+.link {
+    position: relative;
+    float: left;
+    width: 80%;
+    /* margin-left: -31px; */
+    color: white !important;
+}
+
+.link-X {
+    position: relative;
+    float: left;
+    /* padding-right: 49px; */
+    width: 20%;
+    background: black;
+    color: white;
+}
+
+.meme-category {
+    border-bottom: white solid 2px;
+}
+
+@media(min-width: 768px) {
     #wrapper {
         padding-left: 0;
     }
