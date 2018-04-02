@@ -9,7 +9,7 @@ class Meme {
 
   createButton(meme) {
     let sideElem = $(
-      `<li data-id="${this.name}" id="list-${meme}">`
+      `<li data-id="${this.name}" id="list-${meme}" style="display: none;">`
       + `<a data-function="kill" id="kill-${meme}" `
       + `class="link-X meme-category" href="#">X</a>`
       + `<a data-function="display" id="display-${meme}" `
@@ -18,12 +18,13 @@ class Meme {
     );
     window.sidebar.append(sideElem);
     this.reference = $(`#list-${meme}`);
-    buttonListener()
+    this.reference.fadeIn(500, buttonListener)
   };
 
   removeButton() {
     this.reference.remove();
-    removeLocal(this.name)
+    removeLocal(this.name);
+    buttonListener();
   }
 }
 
@@ -49,7 +50,7 @@ function sidebarListener() {
 function buttonListener() {
   $("a").on("click", function (event) {
     let a = $("a");
-    a.off("click", function(){})
+    a.off("click");
 
     let clicked = $(this);
     let id = clicked.attr("id");
@@ -57,13 +58,13 @@ function buttonListener() {
     if (id === "add-button") {
       let input = $("#search-bar").val();
       if (input.length > 0) {
-        let obj = new Meme(input);
+        let obj = new Meme(input.trim());
       }
     }
 
     else if (clicked.attr("data-function") === "kill") {
       console.log(clicked.parent().attr("data-id"));
-      a.off("mouseleave");
+      a.off("mouseleave mouseenter");
       clicked.parent().fadeOut(500, function () {
         window.activeMemes[
           clicked.parent().attr("data-id")
