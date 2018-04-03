@@ -13,7 +13,7 @@ class Meme {
       `<li data-id="${meme}" id="list-${meme}" style="display: none;">`
       + `<a data-function="kill" id="kill-${meme}" `
       + `class="link-X meme-category" href="#">X</a>`
-      + `<a data-function="display" id="display-${meme}" `
+      + `<a data-function="display" id="display-${meme}"`
       + `class="link meme-category" href="#">${deFormat(meme)}</a>`
       + `</li>`
     );
@@ -36,6 +36,12 @@ class Gif {
     this.still = still;
     this.active = active;
     this.row = row;
+    if (this.name.split("-")[0].toLowerCase() === "untitled") {
+      this.displayName = "untitled"
+    }
+    else {
+      this.displayName = this.name
+    }
     this.display();
   }
 
@@ -47,7 +53,7 @@ class Gif {
       + `class="card-img pagination gif-image" `
       + `data-state="still" `
       + `src="${this.still}" `
-      + `><h3 class="pacifico">${this.name}</h3.class>`
+      + `><h3 class="pacifico">${this.displayName}</h3>`
       + `<h3 class="pacifico smaller-text"> Rating: ${this.rating}</h3>`
       + `</div>`
     );
@@ -84,7 +90,7 @@ function sidebarListener() {
       }, 350);
       $(".gif-box").animate({
         "height": "-=50",
-      }, 300)
+      }, 500)
     }
     else if ((sideWrap.width() > 200)
       && event.type === "mouseleave") {
@@ -94,7 +100,7 @@ function sidebarListener() {
       }, 350);
       $(".gif-box").animate({
         "height": "+=50",
-      }, 300)
+      }, 500)
     }
   });
 }
@@ -115,6 +121,18 @@ function buttonListener() {
         buttonListener();
       }
     }
+    else if (clicked.attr("data-function") === "display") {
+      a.off("click");
+      console.log(clicked.parent().attr("data-id"));
+      a.off("mouseleave mouseenter");
+      if (typeof currentGifs !== "undefined") {
+        window.delayedGet = [deFormat(clicked.parent().attr("data-id")), 0];
+        cascade(false);
+      }
+      else {
+        getGifs(deFormat(clicked.parent().attr("data-id")), 0);
+      }
+    }
     else if (clicked.attr("data-function") === "kill") {
       a.off("click");
       console.log(clicked.parent().attr("data-id"));
@@ -131,6 +149,7 @@ function buttonListener() {
 function loadMemes() {
   window.memeStorage = [];
   window.activeMemes = {};
+
   if (typeof localStorage.memes !== "undefined") {
     let local = JSON.parse(localStorage.memes);
     local.forEach((value) => {
@@ -144,6 +163,7 @@ function loadMemes() {
 }
 
 function getGifs(meme, offset) {
+
   let url = ("https://api.giphy.com/v1/gifs/search?"
     + $.param({
       "api_key": "UqSUUkDz0IyApK3toBVqHbtloo27LlFN",
@@ -164,59 +184,101 @@ function getGifs(meme, offset) {
 
 function arrangeGifs(response) {
   window.currentGifs = [];
+  let titles = []
   let gifCount = 0;
   let rowCount = 0;
+  let assignCount = 0;
+  let duplicateOffset = 2;
   let currentRow = createRow(rowCount);
   window.activeGifs = [];
   response.data.forEach((value) => {
+    let title;
+    if (value.title.length < 1) {
+      title = `untitled-${assignCount}`;
+    }
+    else if (titles.indexOf(value.title) !== -1) {
+      let splitted = value.title.split("GIF")[0].trim();
+      title = deFormat(`${format(splitted)}-${assignCount}`)
+    }
+    else {
+      title = value.title
+    }
+    titles.push(value.title);
     activeGifs.push(
       new Gif(
-        value.title,
+        title,
         value.rating,
         value.images.fixed_height_still.url,
         value.images.fixed_height.url,
         currentRow
       )
     );
+    assignCount++;
     gifCount++;
     if (gifCount > 3) {
       gifCount = 0;
       rowCount++;
       currentRow = createRow(rowCount)
     }
-    cascade(true);
   });
+  cascade(true)
 }
 
 function cascade(bool) {
-  this.cascadeCount = 0;
+  window.cascadeCount = 0;
   if (bool) {
-    window.cascadeInterval = setInterval(cascadeFadeIn.bind(this), 35)
+    let cascadeInterval = setInterval(function () {
+      cascadeFadeIn();
+      if (window.cascadeCount === 25) {
+        clearInterval(cascadeInterval);
+        currentGifs.forEach((gif) => {
+          if (gif.css("display") === "none") {
+            gif.css("display", "block")
+          }
+        })
+      }
+    }, 35);
+    console.log(cascadeInterval)
   }
-  else if (!bool) {
-    window.cascadeInterval = setInterval(cascadeFadeOut.bind(this), 25)
+  if (!bool) {
+    let cascadeInterval = setInterval(function () {
+      cascadeFadeOut();
+      if (window.cascadeCount === 25) {
+        clearInterval(cascadeInterval);
+        jifs.empty();
+        getGifs(window.delayedGet[0], window.delayedGet[1])
+      }
+    }, 35);
+    console.log(cascadeInterval);
   }
 }
 
 function cascadeFadeIn() {
-  if (this.cascadeCount < currentGifs.length) {
-    currentGifs[this.cascadeCount].fadeIn(500);
-    this.cascadeCount++;
+  if (window.cascadeCount < currentGifs.length) {
+    currentGifs[window.cascadeCount].fadeIn(500);
+    window.cascadeCount++;
   }
-  else{
-    clearInterval(window.cascadeInterval);
-    this.cascadeCount = 0;
+  else if (window.cascadeCount === currentGifs.length) {
+    console.log("here");
+    window.clearInterval(window.cascadeInterval);
+    buttonListener();
+    console.log("there");
+    window.cascadeCount++;
   }
+  console.log(cascadeCount)
 }
 
 function cascadeFadeOut() {
-  if (this.cascadeCount < currentGifs.length) {
-    currentGifs[this.cascadeCount].fadeOut(500);
+  if (window.cascadeCount < currentGifs.length) {
+    currentGifs[window.cascadeCount].fadeOut(500);
     this.cascadeCount++;
   }
-  else{
-    clearInterval(window.cascadeInterval);
-    this.cascadeCount = 0;
+  else if (window.cascadeCount === currentGifs.length) {
+    console.log("here");
+    window.clearInterval(window.cascadeInterval);
+    buttonListener();
+    console.log("there");
+    window.cascadeCount++
   }
 }
 
