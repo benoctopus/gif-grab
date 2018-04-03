@@ -26,8 +26,10 @@ h2 {
     margin:  auto;
 }
 
+h3 {text-align:  center;font-size: 1.5vw;line-height: 29px;text-shadow: -3px 4px 7px #000000a6;}
+
 header {
-    background: #1b4056;
+    background: #1b405694;
     border-bottom: solid 4px white;
 }
 
@@ -66,6 +68,7 @@ label {
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     height: 100%;
+    /* padding-bottom: 29px; */
     transition: all 0.5s ease;
 }
 
@@ -97,6 +100,8 @@ label {
 #page-content-wrapper {
     width: 100%;
     position: absolute;
+    height: 861px;
+    overflow:  auto;
     padding: 15px;
 }
 
@@ -133,11 +138,26 @@ label {
     font-size: 30px;
 }
 
+.gif-row {
+    margin-bottom: 23px;
+}
+
+.smaller-text {
+    font-size: 20px;
+    margin-bottom:  0px;
+}
+
+.gif-box {height: 310px;border: solid white;background: #1b4056d1;color: white;overflow: hidden;padding: 14px;box-shadow: -5px 6px 16px 0px #000000b3;}
+
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: #fff;
     background: rgba(255, 255, 255, 0.2);
 }
+
+.gif-image {/* position:  absolute; */position: relative;margin-bottom: 12px;/* margin-top: 10px; */height: 68%;width: 100%;box-shadow: -7px 7px 14px #0000004f;}
+
+img#star-wars-dogs {}
 
 .sidebar-nav li a:active, .sidebar-nav li a:focus {
     text-decoration: none;
@@ -147,6 +167,11 @@ label {
     height: 65px;
     font-size: 18px;
     line-height: 60px;
+}
+
+.pacifico {
+    font-family: "Pacifico", cursive;
+    text-shadow: -3px 4px 7px #000000a6;
 }
 
 .sidebar-nav>.sidebar-brand a label {
@@ -194,6 +219,8 @@ label {
     }
     #page-content-wrapper {
         padding: 20px;
+        /* height: 0%; */
+        padding-bottom: 0;
         position: relative;
     }
     #wrapper.toggled #page-content-wrapper {
