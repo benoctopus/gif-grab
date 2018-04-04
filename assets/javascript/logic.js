@@ -255,7 +255,7 @@ function cascade(bool) {
 
 function cascadeFadeIn() {
   if (window.cascadeCount < currentGifs.length) {
-    currentGifs[window.cascadeCount].fadeIn(500);
+    currentGifs[window.cascadeCount].fadeIn(300);
     window.cascadeCount++;
   }
   else if (window.cascadeCount === currentGifs.length) {
@@ -270,7 +270,7 @@ function cascadeFadeIn() {
 
 function cascadeFadeOut() {
   if (window.cascadeCount < currentGifs.length) {
-    currentGifs[window.cascadeCount].fadeOut(500);
+    currentGifs[window.cascadeCount].fadeOut(300);
     this.cascadeCount++;
   }
   else if (window.cascadeCount === currentGifs.length) {
