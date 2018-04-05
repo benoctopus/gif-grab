@@ -34,6 +34,7 @@ class Gif {
     this.name = name.split("GIF")[0].trim();
     this.rating = rating;
     this.still = still;
+    this.active = active;
     this.row = row;
     if (this.name.split("-")[0].toLowerCase() === "untitled") {
       this.displayName = "untitled"
@@ -234,6 +235,35 @@ function arrangeGifs(response) {
   });
   console.log("there2");
   cascade(true)
+}
+
+function boxListener() {
+  $("img").on("click", function () {
+    console.log("listening");
+    let clicked = $(this);
+    activeGifs.forEach((obj) => {
+      $("a").off("click");
+      sideWrap.off("mouseleave mouseenter");
+      if (obj.reference.attr("id") === clicked.parent().attr("id")) {
+        displaySpotlight(obj);
+        console.log("found");
+        return;
+      }
+    });
+  });
+}
+
+function displaySpotlight(gif) {
+  let container = $("#spot-container");
+  let title = $("#spot-title");
+  let rating = $("#spot-rating");
+  let image = $("#spot-gif");
+  image.attr("src", gif.active);
+  title.text(gif.name);
+  rating.text(`Rating: ${gif.rating}`);
+  container.fadeIn(500)
+
+
 }
 
 function cascade(bool) {

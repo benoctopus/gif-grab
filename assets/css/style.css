@@ -56,8 +56,31 @@ label {
     border-bottom: solid 2px white;
     border-top: solid 2px white;
     background: black;
-    text-align:  center;
+    text-align: center;
     margin-left: -43px;
+}
+
+#spot-container {
+    position: fixed;
+    margin-left: -19px;
+    z-index: 99 !important;
+}
+
+#spot-row {
+    margin: auto;
+}
+
+#spot-gif {
+    width: 100%;
+    height: auto;
+}
+
+.sp-row-2 {
+    height: auto;
+}
+
+#spot-box {
+
 }
 
 #wrapper {
@@ -155,7 +178,6 @@ label {
 
 .gif-image {/* position:  absolute; */position: relative;margin-bottom: 12px;/* margin-top: 10px; */height: 68%;width: 100%;box-shadow: -7px 7px 14px #0000004f;}
 
-img#star-wars-dogs {}
 
 .sidebar-nav li a:active, .sidebar-nav li a:focus {
     text-decoration: none;
@@ -166,6 +188,7 @@ img#star-wars-dogs {}
     font-size: 18px;
     line-height: 60px;
 }
+
 
 .pacifico {
     font-family: "Pacifico", cursive;
@@ -187,7 +210,10 @@ img#star-wars-dogs {}
     width: 80%;
     /* margin-left: -31px; */
     color: white !important;
+    overflow: hidden;
 }
+
+a#display-dog {}
 
 .link-X {
     position: relative;

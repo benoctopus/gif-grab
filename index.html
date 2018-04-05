@@ -18,6 +18,8 @@
         <h1 class="col-12 text-center" id="title">Gif Grab</h1>
     </div>
 </header>
+<!---->
+
 <div id="wrapper">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
@@ -31,6 +33,22 @@
     </div>
 
     <div id="page-content-wrapper">
+        <div class="container-fluid" id="spot-container" style="display: none">
+            <div class="row justify-content-center" id="spot-row">
+                <div class="col-6 col-xl-8 card" id="spot-box">
+                    <div class="row justify-content-between card-title sp-row-1">
+                        <h3 class="col-auto text-left" id="spot-title">hello</h3>
+                        <a href="#" class="col-auto text-right" id="spot-exit">X</a>
+                    </div>
+                    <div class="row justify-content-between sp-row-2">
+                        <img class="col-auto" id="spot-gif" alt="GIF"/>
+                    </div>
+                    <div class="row justify-content-between sp-row-3">
+                        <h3 class="col-auto" id="spot-rating"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container-fluid" id="jifs">
             <div class="row justify-content-center" id="instruction-row">
                 <div class="col-auto">
@@ -44,16 +62,18 @@
 <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 
 <script src="assets/javascript/logic.js"></script>
+</div>
+</div>
 </body>
 </html>
