@@ -180,14 +180,20 @@ function getGifs(meme, offset) {
     url: url,
     method: "GET"
   }).then((response) => {
-    console.log(response)
+    console.log(response);
+    if (response.data.length < 1) {
+      alert("No Gifs Found");
+      window.running = false;
+      activeMemes[meme].removeButton();
+      buttonListener();
+      return;
+    }
     arrangeGifs(response);
   });
 }
 
 function arrangeGifs(response) {
   window.currentGifs = [];
-  console.log("there");
   let titles = [];
   let gifCount = 0;
   let rowCount = 0;
@@ -197,13 +203,13 @@ function arrangeGifs(response) {
   window.activeGifs = [];
   response.data.forEach((value) => {
     let title;
-    if (value.title.length < 1) {
-      title = `untitled-${assignCount}`;
-    }
-    else if (titles.indexOf(value.title) !== -1) {
+    if (titles.indexOf(value.title) !== -1) {
       let splitted = value.title.split("GIF")[0].trim();
       title = deFormat(`${format(splitted)}-${duplicateOffset}`);
       duplicateOffset++
+    }
+    else if (value.title.length < 1) {
+      title = `untitled-${assignCount}`;
     }
     else {
       title = value.title
@@ -225,35 +231,35 @@ function arrangeGifs(response) {
       rowCount++;
       currentRow = createRow(rowCount)
     }
-    console.log("loop");
-    console.log(currentGifs, activeGifs)
   });
   console.log("there2");
   cascade(true)
 }
 
 function cascade(bool) {
-  console.log("cascade");
   window.cascadeCount = 0;
+  console.log("cascade:" + cascadeCount.toString());
   $("a").off("click");
   window.running = false;
   if (bool) {
     let cascadeInterval = setInterval(function () {
       cascadeFadeIn();
-      if (window.cascadeCount === 25) {
+      if (window.cascadeCount === currentGifs.length) {
+        console.log("complete");
+        $(".gif-box").css("display", "block");
+        buttonListener();
         clearInterval(cascadeInterval);
-        $(".gif-box").css("display", "block")
       }
     }, 35);
   }
   if (!bool) {
     let cascadeInterval2 = setInterval(function () {
       cascadeFadeOut();
-      if (window.cascadeCount === 25) {
-        clearInterval(cascadeInterval2);
+      if (window.cascadeCount === currentGifs.length) {
         jifs.empty();
         getGifs(window.delayedGet[0], window.delayedGet[1]);
         buttonListener();
+        clearInterval(cascadeInterval2);
       }
     }, 35);
   }
@@ -261,7 +267,7 @@ function cascade(bool) {
 
 function cascadeFadeIn() {
   if (window.cascadeCount < currentGifs.length) {
-    currentGifs[window.cascadeCount].fadeIn(300);
+    currentGifs[window.cascadeCount].fadeIn(250);
     window.cascadeCount++;
   }
   else if (window.cascadeCount === currentGifs.length) {
@@ -271,11 +277,10 @@ function cascadeFadeIn() {
 
 function cascadeFadeOut() {
   if (window.cascadeCount < currentGifs.length) {
-    currentGifs[window.cascadeCount].fadeOut(300);
+    currentGifs[window.cascadeCount].fadeOut(250);
     window.cascadeCount++;
   }
   else if (window.cascadeCount === currentGifs.length) {
-    buttonListener();
     window.cascadeCount++
   }
 }
