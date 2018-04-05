@@ -34,7 +34,6 @@ class Gif {
     this.name = name.split("GIF")[0].trim();
     this.rating = rating;
     this.still = still;
-    this.active = active;
     this.row = row;
     if (this.name.split("-")[0].toLowerCase() === "untitled") {
       this.displayName = "untitled"
@@ -66,11 +65,7 @@ class Gif {
 }
 
 $(document).ready(function () {
-  //this is a very hacky solution to an issue where
-  //the gif display buttons will trigger 3 events on
-  //a single button click. please halp...
-  window.preventMultiple = 0;
-  //see button listener for more details
+  window.running = false;
   window.jifs = $("#jifs");
   window.sidebar = $(".sidebar-nav");
   loadMemes();
@@ -126,12 +121,6 @@ function buttonListener() {
       }
     }
     else if (clicked.attr("data-function") === "display") {
-      //hacky fix pt2
-      if (preventMultiple < 2) {
-        //this blocks the first 3 events.
-        preventMultiple++;
-        return;
-      }
       a.off("click");
       console.log(clicked.parent().attr("data-id"));
       sideWrap.off("mouseleave mouseenter");
@@ -174,7 +163,10 @@ function loadMemes() {
 }
 
 function getGifs(meme, offset) {
-
+  if(window.running === true) {
+    return;
+  }
+  window.running = true;
   let url = ("https://api.giphy.com/v1/gifs/search?"
     + $.param({
       "api_key": "UqSUUkDz0IyApK3toBVqHbtloo27LlFN",
@@ -188,12 +180,14 @@ function getGifs(meme, offset) {
     url: url,
     method: "GET"
   }).then((response) => {
+    console.log(response)
     arrangeGifs(response);
   });
 }
 
 function arrangeGifs(response) {
   window.currentGifs = [];
+  console.log("there");
   let titles = [];
   let gifCount = 0;
   let rowCount = 0;
@@ -231,13 +225,18 @@ function arrangeGifs(response) {
       rowCount++;
       currentRow = createRow(rowCount)
     }
+    console.log("loop");
+    console.log(currentGifs, activeGifs)
   });
+  console.log("there2");
   cascade(true)
 }
 
 function cascade(bool) {
+  console.log("cascade");
   window.cascadeCount = 0;
   $("a").off("click");
+  window.running = false;
   if (bool) {
     let cascadeInterval = setInterval(function () {
       cascadeFadeIn();
@@ -266,7 +265,6 @@ function cascadeFadeIn() {
     window.cascadeCount++;
   }
   else if (window.cascadeCount === currentGifs.length) {
-    buttonListener();
     window.cascadeCount++;
   }
 }
