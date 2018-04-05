@@ -79,7 +79,6 @@ function sidebarListener() {
   let introText = $("#instruction-row");
   console.log(sideWrap.width());
   sideWrap.on("mouseenter mouseleave", function (event) {
-    console.log(event, this, $(this));
     if (introText.css("display") !== "none") {
       introText.fadeOut(500)
     }
@@ -124,13 +123,36 @@ function buttonListener() {
     else if (clicked.attr("data-function") === "display") {
       a.off("click");
       console.log(clicked.parent().attr("data-id"));
+      if (clicked.attr("id") === "right" || clicked.attr("id") === "left") {
+        if (typeof query === "undefined") {
+          buttonListener();
+          return
+        }
+        else {
+          if (clicked.attr("id") === "right"){
+            window.currentOffset += 24;
+          }
+          else {
+            window.currentOffset -= 24;
+            if (window.currentOffset < 0) {
+              window.currentOffset = 0;
+              buttonListener();
+              return;
+            }
+          }
+        }
+      }
+      else {
+        window.currentOffset = 0;
+        window.query = deFormat(clicked.parent().attr("data-id"));
+      }
       sideWrap.off("mouseleave mouseenter");
       if (typeof currentGifs !== "undefined") {
-        window.delayedGet = [deFormat(clicked.parent().attr("data-id")), 0];
+        window.delayedGet = [window.query, currentOffset];
         cascade(false);
       }
       else {
-        getGifs(deFormat(clicked.parent().attr("data-id")), 0);
+        getGifs(deFormat(window.query, currentOffset));
       }
       sidebarListener()
     }
@@ -234,7 +256,7 @@ function arrangeGifs(response) {
     }
   });
   console.log("there2");
-  boxListener()
+  boxListener();
   cascade(true)
 }
 
