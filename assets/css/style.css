@@ -77,6 +77,7 @@ label {
 #spot-row {
     margin: auto;
     margin-top: -63px;
+    /* height: 700px; */
 }
 
 #spot-gif {
@@ -108,7 +109,7 @@ label {
     overflow: hidden;
     margin-top: 20px;
     padding: 14px;
-    height: 858px;
+    height: 100%;
     box-shadow: -5px 6px 16px 0px #000000b3;
 }
 
