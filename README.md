@@ -18,6 +18,8 @@ The app is used through accessing the searchbar on the left side of the content 
 
 ## known issues
 
+This app is designed only for desktop screens
+
 this app is currently bug ridden. Doing the following things may break the app:
 
 - using special charecters in a search term
@@ -26,3 +28,5 @@ this app is currently bug ridden. Doing the following things may break the app:
 
 It is also worth noting that the bigger gif frames may be prone to browser compatibility issues. 
 I'm working on it. In the meantime, simply refresh the page if you encounter any of these issues.
+
+ps: sorry for the lack of comments :(
