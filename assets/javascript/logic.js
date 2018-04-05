@@ -234,6 +234,7 @@ function arrangeGifs(response) {
     }
   });
   console.log("there2");
+  boxListener()
   cascade(true)
 }
 
@@ -243,7 +244,6 @@ function boxListener() {
     let clicked = $(this);
     activeGifs.forEach((obj) => {
       $("a").off("click");
-      sideWrap.off("mouseleave mouseenter");
       if (obj.reference.attr("id") === clicked.parent().attr("id")) {
         displaySpotlight(obj);
         console.log("found");
@@ -254,16 +254,25 @@ function boxListener() {
 }
 
 function displaySpotlight(gif) {
-  let container = $("#spot-container");
-  let title = $("#spot-title");
-  let rating = $("#spot-rating");
-  let image = $("#spot-gif");
+  window.container = $("#spot-container");
+  window.title = $("#spot-title");
+  window.rating = $("#spot-rating");
+  window.image = $("#spot-gif");
+  window.exitBut = $("#spot-exit");
   image.attr("src", gif.active);
   title.text(gif.name);
   rating.text(`Rating: ${gif.rating}`);
-  container.fadeIn(500)
+  container.fadeIn(500, function() {
+    exitBut.on("click", exitListener);
+  });
+  $("img").off("click")
+}
 
-
+function exitListener() {
+  container.fadeOut(500, function() {
+    buttonListener();
+    boxListener()
+  })
 }
 
 function cascade(bool) {
@@ -283,6 +292,7 @@ function cascade(bool) {
     }, 35);
   }
   if (!bool) {
+    $("img").off("click");
     let cascadeInterval2 = setInterval(function () {
       cascadeFadeOut();
       if (window.cascadeCount === currentGifs.length) {
