@@ -66,6 +66,11 @@ class Gif {
 }
 
 $(document).ready(function () {
+  //this is a very hacky solution to an issue where
+  //the gif display buttons will trigger 3 events on
+  //a single button click. please halp...
+  window.preventMultiple = 0;
+  //see button listener for more details
   window.jifs = $("#jifs");
   window.sidebar = $(".sidebar-nav");
   loadMemes();
@@ -74,7 +79,7 @@ $(document).ready(function () {
 });
 
 function sidebarListener() {
-  let sideWrap = $("#sidebar-wrapper");
+  window.sideWrap = $("#sidebar-wrapper");
   let introText = $("#instruction-row");
   console.log(sideWrap.width());
   sideWrap.on("mouseenter mouseleave", function (event) {
@@ -118,13 +123,18 @@ function buttonListener() {
         let obj = new Meme(input);
       }
       else {
-        buttonListener();
       }
     }
     else if (clicked.attr("data-function") === "display") {
+      //hacky fix pt2
+      if (preventMultiple < 2) {
+        //this blocks the first 3 events.
+        preventMultiple++;
+        return;
+      }
       a.off("click");
       console.log(clicked.parent().attr("data-id"));
-      a.off("mouseleave mouseenter");
+      sideWrap.off("mouseleave mouseenter");
       if (typeof currentGifs !== "undefined") {
         window.delayedGet = [deFormat(clicked.parent().attr("data-id")), 0];
         cascade(false);
@@ -132,16 +142,17 @@ function buttonListener() {
       else {
         getGifs(deFormat(clicked.parent().attr("data-id")), 0);
       }
+      sidebarListener()
     }
     else if (clicked.attr("data-function") === "kill") {
       a.off("click");
       console.log(clicked.parent().attr("data-id"));
-      a.off("mouseleave mouseenter");
+      sideWrap.off("mouseleave mouseenter");
       clicked.parent().fadeOut(500, function () {
         window.activeMemes[
           clicked.parent().attr("data-id")
           ].removeButton();
-      })
+      });
     }
   });
 }
@@ -178,13 +189,12 @@ function getGifs(meme, offset) {
     method: "GET"
   }).then((response) => {
     arrangeGifs(response);
-    console.log(response)
   });
 }
 
 function arrangeGifs(response) {
   window.currentGifs = [];
-  let titles = []
+  let titles = [];
   let gifCount = 0;
   let rowCount = 0;
   let assignCount = 0;
@@ -198,7 +208,8 @@ function arrangeGifs(response) {
     }
     else if (titles.indexOf(value.title) !== -1) {
       let splitted = value.title.split("GIF")[0].trim();
-      title = deFormat(`${format(splitted)}-${assignCount}`)
+      title = deFormat(`${format(splitted)}-${duplicateOffset}`);
+      duplicateOffset++
     }
     else {
       title = value.title
@@ -226,30 +237,26 @@ function arrangeGifs(response) {
 
 function cascade(bool) {
   window.cascadeCount = 0;
+  $("a").off("click");
   if (bool) {
     let cascadeInterval = setInterval(function () {
       cascadeFadeIn();
       if (window.cascadeCount === 25) {
         clearInterval(cascadeInterval);
-        currentGifs.forEach((gif) => {
-          if (gif.css("display") === "none") {
-            gif.css("display", "block")
-          }
-        })
+        $(".gif-box").css("display", "block")
       }
     }, 35);
-    console.log(cascadeInterval)
   }
   if (!bool) {
-    let cascadeInterval = setInterval(function () {
+    let cascadeInterval2 = setInterval(function () {
       cascadeFadeOut();
       if (window.cascadeCount === 25) {
-        clearInterval(cascadeInterval);
+        clearInterval(cascadeInterval2);
         jifs.empty();
-        getGifs(window.delayedGet[0], window.delayedGet[1])
+        getGifs(window.delayedGet[0], window.delayedGet[1]);
+        buttonListener();
       }
     }, 35);
-    console.log(cascadeInterval);
   }
 }
 
@@ -259,25 +266,18 @@ function cascadeFadeIn() {
     window.cascadeCount++;
   }
   else if (window.cascadeCount === currentGifs.length) {
-    console.log("here");
-    window.clearInterval(window.cascadeInterval);
     buttonListener();
-    console.log("there");
     window.cascadeCount++;
   }
-  console.log(cascadeCount)
 }
 
 function cascadeFadeOut() {
   if (window.cascadeCount < currentGifs.length) {
     currentGifs[window.cascadeCount].fadeOut(300);
-    this.cascadeCount++;
+    window.cascadeCount++;
   }
   else if (window.cascadeCount === currentGifs.length) {
-    console.log("here");
-    window.clearInterval(window.cascadeInterval);
     buttonListener();
-    console.log("there");
     window.cascadeCount++
   }
 }
