@@ -1,6 +1,8 @@
 // window.apiKey = "UqSUUkDz0IyApK3toBVqHbtloo27LlFNV";
 //https://api.giphy.com/v1/gifs/search?
 
+console.log('hello');
+
 class Meme {
   constructor(meme, store) {
     this.name = format(meme);
@@ -49,11 +51,12 @@ class Gif {
     let elem = $(
       `<div class="col-2 card gif-box" `
       + `id="div-${format(this.name)}" style="display: none">`
-      + `<img id="${format(this.name)}" `
+      + `<div id="${format(this.name)}" `
       + `class="card-img pagination gif-image" `
       + `data-state="still" `
-      + `src="${this.still}" `
-      + `><h3 class="pacifico">${this.displayName}</h3>`
+      // + `src="${this.still}" `
+      + `style="display: inline-block; background-image: url(${this.still}); background-size: cover"`
+      + `></div><h3 class="pacifico">${this.displayName}</h3>`
       + `<h3 class="pacifico smaller-text"> Rating: ${this.rating}</h3>`
       + `</div>`
     );
@@ -113,6 +116,7 @@ function buttonListener() {
     console.log(clicked);
     if (id === "add-button") {
       let input = $("#search-bar").val().trim();
+      if (!input) return;
       a.off("click");
       if (input.length > 0 && memeStorage.indexOf(format(input)) < 0) {
         let obj = new Meme(input);
@@ -261,7 +265,7 @@ function arrangeGifs(response) {
 }
 
 function boxListener() {
-  $("img").on("click", function () {
+  $("div").on("click", function () {
     console.log("listening");
     let clicked = $(this);
     activeGifs.forEach((obj) => {
@@ -281,7 +285,7 @@ function displaySpotlight(gif) {
   window.rating = $("#spot-rating");
   window.image = $("#spot-gif");
   window.exitBut = $("#spot-exit");
-  image.attr("src", gif.active);
+  image.css("background-image", `url(${gif.active})`);
   title.text(gif.name);
   rating.text(`Rating: ${gif.rating}`);
   container.fadeIn(500, function() {

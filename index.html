@@ -1,83 +1,77 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!--<link rel="stylesheet" href="https:"-->
     <!--integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
     <link href="https://fonts.googleapis.com/css?family=Oswald|Pacifico" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
     <title></title>
 </head>
+
 <body>
-<header class="container-fluid">
-    <div class="row ">
-        <h1 class="col-12 text-center" id="title">Gif Grab</h1>
-    </div>
-</header>
-
-<div id="wrapper">
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li>
-                <input type="text" id="search-bar"/>
-            </li>
-            <li>
-                <a href="#" id="add-button">Add</a>
-            </li>
-            <li>
-                <a href="#" data-function="display" class="movement" id="right">></a>
-                <a href="#" data-function="display" class="movement" id="left"><</a>
-            </li>
-        </ul>
-    </div>
-
-    <div id="page-content-wrapper">
-        <div class="container-fluid" id="spot-container" style="display: none">
-            <div class="row justify-content-center" id="spot-row">
-                <div class="col-6 col-xl-8 card" id="spot-box">
-                    <div class="row justify-content-between sp-row-1">
-                        <div class="col-auto"></div>
-                        <h3 class="col-auto text-center pacifico" id="spot-title">hello</h3>
-                        <a href="#" class="col-auto text-right" id="spot-exit">X</a>
-                    </div>
-                    <div class="row justify-content-center sp-row-2">
-                        <img class="col-8" id="spot-gif" alt="GIF"/>
-                    </div>
-                    <div class="row justify-content-center sp-row-3">
-                        <h3 class="col-auto pacifico text-center" id="spot-rating"></h3>
-                    </div>
-                </div>
-            </div>
+    <header class="container-fluid">
+        <div class="row ">
+            <h1 class="col-12 text-center" id="title">Gif Grab</h1>
         </div>
-        <div class="container-fluid" id="jifs">
-            <div class="row justify-content-center" id="instruction-row">
-                <div class="col-auto">
-                    <h2 class=" text-center p-2">Move Your mouse to the left edge to begin</h2>
-                </div>
-            </div>
+    </header>
+
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li>
+                    <input type="text" id="search-bar" />
+                </li>
+                <li>
+                    <a href="#" id="add-button">Add</a>
+                </li>
+                <li>
+                    <a href="#" data-function="display" class="movement" id="right">></a>
+                    <a href="#" data-function="display" class="movement" id="left">
+                        <</a> </li> </ul> </div> <div id="page-content-wrapper">
+                            <div class="container-fluid" id="spot-container" style="display: none">
+                                <div class="row justify-content-center" id="spot-row">
+                                    <div class="col-6 col-xl-8" id="spot-box">
+                                        <div class="row justify-content-between sp-row-1">
+                                            <div class="col-auto"></div>
+                                            <h3 class="col-auto text-center pacifico" id="spot-title">hello</h3>
+                                            <a href="#" class="col-auto text-right" id="spot-exit">X</a>
+                                        </div>
+                                        <div class="row justify-content-center sp-row-2">
+                                            <div class="col-8" id="spot-gif" alt="GIF"></div>
+                                        </div>
+                                        <div class="row justify-content-center sp-row-3">
+                                            <h3 class="col-auto pacifico text-center" id="spot-rating"></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid" id="jifs">
+                                <div class="row justify-content-center" id="instruction-row">
+                                    <div class="col-auto">
+                                        <h2 class=" text-center p-2">Move Your mouse to the left edge to begin</h2>
+                                    </div>
+                                </div>
+                            </div>
         </div>
+
     </div>
-
-</div>
-<script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-<script src="assets/javascript/logic.js"></script>
-</div>
-</div>
+    <script src="assets/javascript/logic.js"></script>
+    </div>
+    </div>
 </body>
+
 </html>

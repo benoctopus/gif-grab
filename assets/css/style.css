@@ -2,6 +2,8 @@
 /*font-family: 'Oswald', sans-serif;*/
 body {
     font-family: 'Oswald', sans-serif;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .content-height {
@@ -81,11 +83,15 @@ label {
 }
 
 #spot-gif {
-    width: 100%;
-    height: 100%;
+    display: inline-block;
+    width: 30vw;
+    height: 30vw;
     background: none;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
     padding: 0;
-    box-shadow: -7px 7px 14px #00000087;
+    /* box-shadow: -7px 7px 14px #00000087; */
     margin-bottom: 9%;
 }
 
@@ -118,7 +124,7 @@ label {
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
-    height: 100%;
+    height: 77%;
     /* padding-bottom: 29px; */
     transition: all 0.5s ease;
 }
@@ -206,6 +212,7 @@ label {
     border: solid white;
     background: #1b4056d1;
     color: white;
+    cursor: pointer;
     overflow: hidden;
     padding: 14px;
     box-shadow: -5px 6px 16px 0px #000000b3;
